@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MicroXModel.Store" Provider="Npgsql" ProviderManifestToken="9.5.14" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dose_measurements">
+          <Key>
+            <PropertyRef Name="meas_nr" />
+          </Key>
+          <Property Name="meas_nr" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="kv" Type="int4" />
+          <Property Name="ic_init" Type="int4" />
+          <Property Name="ic_limit" Type="int4" />
+          <Property Name="kvp_a" Type="float4" />
+          <Property Name="mas" Type="float4" />
+          <Property Name="ms" Type="float4" />
+          <Property Name="dose" Type="float4" />
+          <Property Name="fromeol" Type="bool" />
+        </EntityType>
+        <EntityType Name="eol_shot">
+          <Key>
+            <PropertyRef Name="shot_nr" />
+          </Key>
+          <Property Name="shot_nr" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="kv" Type="int4" />
+          <Property Name="mas" Type="float4" />
+          <Property Name="t" Type="float4" />
+          <Property Name="ia" Type="float4" />
+          <Property Name="ic" Type="float4" />
+          <Property Name="vf" Type="int4" />
+          <Property Name="if" Type="float4" />
+        </EntityType>
+        <EntityType Name="errors">
+          <Key>
+            <PropertyRef Name="errno" />
+          </Key>
+          <Property Name="errno" Type="bpchar" MaxLength="4" Nullable="false" />
+          <Property Name="error_name" Type="varchar" MaxLength="8000" />
+          <Property Name="description" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="exposure_data">
+          <Key>
+            <PropertyRef Name="exp_id" />
+          </Key>
+          <Property Name="exp_id" Type="int8" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" Nullable="false" />
+          <Property Name="exp_ts" Type="timestamp" Nullable="false" />
+          <Property Name="shot_count" Type="int4" Nullable="false" />
+          <Property Name="pre_kv" Type="int4" />
+          <Property Name="pre_mas" Type="float4" />
+          <Property Name="pre_ia" Type="int4" />
+          <Property Name="pre_ms" Type="int4" />
+          <Property Name="pre_ic" Type="int4" />
+          <Property Name="pre_vgc" Type="int4" />
+          <Property Name="pre_vf" Type="int4" />
+          <Property Name="post_kv" Type="int4" Nullable="false" />
+          <Property Name="post_mas" Type="float4" Nullable="false" />
+          <Property Name="post_ia" Type="float4" />
+          <Property Name="post_ms" Type="int4" />
+          <Property Name="post_ic" Type="float4" />
+          <Property Name="post_vgc" Type="int4" />
+          <Property Name="post_vf_xrs" Type="int4" />
+          <Property Name="post_vf_tube" Type="int4" />
+          <Property Name="post_if_pre" Type="float4" />
+          <Property Name="post_if_after" Type="float4" />
+          <Property Name="post_tshot" Type="float4" />
+          <Property Name="post_tavg" Type="float4" />
+          <Property Name="post_rg" Type="int4" />
+          <Property Name="post_vz" Type="int4" />
+          <Property Name="post_dap" Type="float4" />
+        </EntityType>
+        <EntityType Name="exposure_errors">
+          <Key>
+            <PropertyRef Name="exp_id" />
+            <PropertyRef Name="errno" />
+          </Key>
+          <Property Name="exp_id" Type="int8" Nullable="false" />
+          <Property Name="errno" Type="bpchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fss_data">
+          <Key>
+            <PropertyRef Name="fss_nr" />
+          </Key>
+          <Property Name="fss_nr" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="kv" Type="int4" />
+          <Property Name="vf" Type="int4" />
+          <Property Name="fsl" Type="float4" />
+          <Property Name="fsw" Type="float4" />
+        </EntityType>
+        <EntityType Name="systems">
+          <Key>
+            <PropertyRef Name="sys_nr" />
+          </Key>
+          <Property Name="sys_nr" Type="bpchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="testers">
+          <Key>
+            <PropertyRef Name="tester_nr" />
+          </Key>
+          <Property Name="tester_nr" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="8000" />
+          <Property Name="last_name" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="tube_data">
+          <Key>
+            <PropertyRef Name="tube_nr" />
+          </Key>
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" Nullable="false" />
+          <Property Name="cathode_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="gc_height_avg" Type="float4" />
+          <Property Name="gc_height_min" Type="float4" />
+          <Property Name="gc_height_max" Type="float4" />
+          <Property Name="gc_height_stdev" Type="float4" />
+          <Property Name="r_25" Type="float4" />
+          <Property Name="r_60" Type="float4" />
+          <Property Name="eol_r_grid" Type="int4" />
+          <Property Name="eol_vz" Type="int4" />
+          <Property Name="eol_focus_corr" Type="int4" />
+          <Property Name="eol_ia" Type="float4" />
+          <Property Name="eol_ic" Type="float4" />
+          <Property Name="eol_t" Type="float4" />
+          <Property Name="eol_v_grid_peak" Type="int4" />
+          <Property Name="eol_ia_55kv_09mm" Type="float4" />
+          <Property Name="eol_ifs_09mm" Type="float4" />
+          <Property Name="eol_ifs_19mm" Type="float4" />
+          <Property Name="eq_alum_half" Type="float4" />
+          <Property Name="eq_alum_ic_init" Type="int4" />
+          <Property Name="eq_alum_ic_limit" Type="int4" />
+          <Property Name="station_id" Type="bpchar" MaxLength="8" />
+          <Property Name="slit_diaphragm" Type="bpchar" MaxLength="8" />
+          <Property Name="carestream_hpx" Type="bpchar" MaxLength="8" />
+          <Property Name="focal_spot_stand" Type="bpchar" MaxLength="8" />
+          <Property Name="film1" Type="bpchar" MaxLength="8" />
+          <Property Name="film2" Type="bpchar" MaxLength="8" />
+          <Property Name="raysafe_base_unit" Type="bpchar" MaxLength="8" />
+          <Property Name="raysafe_sensor" Type="bpchar" MaxLength="8" />
+          <Property Name="disc_thickness" Type="float4" />
+        </EntityType>
+        <EntityType Name="tube_system">
+          <Key>
+            <PropertyRef Name="nr" />
+          </Key>
+          <Property Name="nr" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sys_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" />
+          <Property Name="start" Type="timestamp" />
+          <Property Name="finish" Type="timestamp" />
+        </EntityType>
+        <EntityType Name="tube_tester">
+          <Key>
+            <PropertyRef Name="tester_nr" />
+            <PropertyRef Name="tube_nr" />
+          </Key>
+          <Property Name="tester_nr" Type="int4" Nullable="false" />
+          <Property Name="tube_nr" Type="bpchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <Association Name="dose_measurements_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="dose_measurements" Type="Self.dose_measurements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="dose_measurements">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="eol_shot_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="eol_shot" Type="Self.eol_shot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="eol_shot">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="exposure_data_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="1" />
+          <End Role="exposure_data" Type="Self.exposure_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="exposure_data">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="exposure_errors_errno_fkey">
+          <End Role="errors" Type="Self.errors" Multiplicity="1" />
+          <End Role="exposure_errors" Type="Self.exposure_errors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="errors">
+              <PropertyRef Name="errno" />
+            </Principal>
+            <Dependent Role="exposure_errors">
+              <PropertyRef Name="errno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="exposure_errors_exp_id_fkey">
+          <End Role="exposure_data" Type="Self.exposure_data" Multiplicity="1" />
+          <End Role="exposure_errors" Type="Self.exposure_errors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exposure_data">
+              <PropertyRef Name="exp_id" />
+            </Principal>
+            <Dependent Role="exposure_errors">
+              <PropertyRef Name="exp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fss_data_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="fss_data" Type="Self.fss_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="fss_data">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_system_sys_nr_fkey">
+          <End Role="systems" Type="Self.systems" Multiplicity="0..1" />
+          <End Role="tube_system" Type="Self.tube_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="sys_nr" />
+            </Principal>
+            <Dependent Role="tube_system">
+              <PropertyRef Name="sys_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_system_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="tube_system" Type="Self.tube_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="tube_system">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_tester_tester_nr_fkey">
+          <End Role="testers" Type="Self.testers" Multiplicity="1" />
+          <End Role="tube_tester" Type="Self.tube_tester" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="testers">
+              <PropertyRef Name="tester_nr" />
+            </Principal>
+            <Dependent Role="tube_tester">
+              <PropertyRef Name="tester_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_tester_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="1" />
+          <End Role="tube_tester" Type="Self.tube_tester" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="tube_tester">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MicroXModelStoreContainer">
+          <EntitySet Name="dose_measurements" EntityType="Self.dose_measurements" Schema="public" store:Type="Tables" />
+          <EntitySet Name="eol_shot" EntityType="Self.eol_shot" Schema="public" store:Type="Tables" />
+          <EntitySet Name="errors" EntityType="Self.errors" Schema="public" store:Type="Tables" />
+          <EntitySet Name="exposure_data" EntityType="Self.exposure_data" Schema="public" store:Type="Tables" />
+          <EntitySet Name="exposure_errors" EntityType="Self.exposure_errors" Schema="public" store:Type="Tables" />
+          <EntitySet Name="fss_data" EntityType="Self.fss_data" Schema="public" store:Type="Tables" />
+          <EntitySet Name="systems" EntityType="Self.systems" Schema="public" store:Type="Tables" />
+          <EntitySet Name="testers" EntityType="Self.testers" Schema="public" store:Type="Tables" />
+          <EntitySet Name="tube_data" EntityType="Self.tube_data" Schema="public" store:Type="Tables" />
+          <EntitySet Name="tube_system" EntityType="Self.tube_system" Schema="public" store:Type="Tables" />
+          <EntitySet Name="tube_tester" EntityType="Self.tube_tester" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="dose_measurements_tube_nr_fkey" Association="Self.dose_measurements_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="dose_measurements" EntitySet="dose_measurements" />
+          </AssociationSet>
+          <AssociationSet Name="eol_shot_tube_nr_fkey" Association="Self.eol_shot_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="eol_shot" EntitySet="eol_shot" />
+          </AssociationSet>
+          <AssociationSet Name="exposure_data_tube_nr_fkey" Association="Self.exposure_data_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="exposure_data" EntitySet="exposure_data" />
+          </AssociationSet>
+          <AssociationSet Name="exposure_errors_errno_fkey" Association="Self.exposure_errors_errno_fkey">
+            <End Role="errors" EntitySet="errors" />
+            <End Role="exposure_errors" EntitySet="exposure_errors" />
+          </AssociationSet>
+          <AssociationSet Name="exposure_errors_exp_id_fkey" Association="Self.exposure_errors_exp_id_fkey">
+            <End Role="exposure_data" EntitySet="exposure_data" />
+            <End Role="exposure_errors" EntitySet="exposure_errors" />
+          </AssociationSet>
+          <AssociationSet Name="fss_data_tube_nr_fkey" Association="Self.fss_data_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="fss_data" EntitySet="fss_data" />
+          </AssociationSet>
+          <AssociationSet Name="tube_system_sys_nr_fkey" Association="Self.tube_system_sys_nr_fkey">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="tube_system" EntitySet="tube_system" />
+          </AssociationSet>
+          <AssociationSet Name="tube_system_tube_nr_fkey" Association="Self.tube_system_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="tube_system" EntitySet="tube_system" />
+          </AssociationSet>
+          <AssociationSet Name="tube_tester_tester_nr_fkey" Association="Self.tube_tester_tester_nr_fkey">
+            <End Role="testers" EntitySet="testers" />
+            <End Role="tube_tester" EntitySet="tube_tester" />
+          </AssociationSet>
+          <AssociationSet Name="tube_tester_tube_nr_fkey" Association="Self.tube_tester_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="tube_tester" EntitySet="tube_tester" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MicroXModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dose_measurements">
+          <Key>
+            <PropertyRef Name="meas_nr" />
+          </Key>
+          <Property Name="meas_nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="kv" Type="Int32" />
+          <Property Name="ic_init" Type="Int32" />
+          <Property Name="ic_limit" Type="Int32" />
+          <Property Name="kvp_a" Type="Single" />
+          <Property Name="mas" Type="Single" />
+          <Property Name="ms" Type="Single" />
+          <Property Name="dose" Type="Single" />
+          <NavigationProperty Name="tube_data" Relationship="Self.dose_measurements_tube_nr_fkey" FromRole="dose_measurements" ToRole="tube_data" />
+          <Property Name="fromeol" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="eol_shot">
+          <Key>
+            <PropertyRef Name="shot_nr" />
+          </Key>
+          <Property Name="shot_nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="kv" Type="Int32" />
+          <Property Name="mas" Type="Single" />
+          <Property Name="t" Type="Single" />
+          <Property Name="ia" Type="Single" />
+          <Property Name="ic" Type="Single" />
+          <Property Name="vf" Type="Int32" />
+          <Property Name="if" Type="Single" />
+          <NavigationProperty Name="tube_data" Relationship="Self.eol_shot_tube_nr_fkey" FromRole="eol_shot" ToRole="tube_data" />
+        </EntityType>
+        <EntityType Name="error">
+          <Key>
+            <PropertyRef Name="errno" />
+          </Key>
+          <Property Name="errno" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="error_name" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="exposure_data" Relationship="Self.exposure_errors" FromRole="errors" ToRole="exposure_data" />
+        </EntityType>
+        <EntityType Name="exposure_data">
+          <Key>
+            <PropertyRef Name="exp_id" />
+          </Key>
+          <Property Name="exp_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="exp_ts" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="shot_count" Type="Int32" Nullable="false" />
+          <Property Name="pre_kv" Type="Int32" />
+          <Property Name="pre_mas" Type="Single" />
+          <Property Name="pre_ia" Type="Int32" />
+          <Property Name="pre_ms" Type="Int32" />
+          <Property Name="pre_ic" Type="Int32" />
+          <Property Name="pre_vgc" Type="Int32" />
+          <Property Name="pre_vf" Type="Int32" />
+          <Property Name="post_kv" Type="Int32" Nullable="false" />
+          <Property Name="post_mas" Type="Single" Nullable="false" />
+          <Property Name="post_ia" Type="Single" />
+          <Property Name="post_ms" Type="Int32" />
+          <Property Name="post_ic" Type="Single" />
+          <Property Name="post_vgc" Type="Int32" />
+          <Property Name="post_vf_xrs" Type="Int32" />
+          <Property Name="post_vf_tube" Type="Int32" />
+          <Property Name="post_if_pre" Type="Single" />
+          <Property Name="post_if_after" Type="Single" />
+          <Property Name="post_tshot" Type="Single" />
+          <Property Name="post_tavg" Type="Single" />
+          <Property Name="post_rg" Type="Int32" />
+          <Property Name="post_vz" Type="Int32" />
+          <Property Name="post_dap" Type="Single" />
+          <NavigationProperty Name="tube_data" Relationship="Self.exposure_data_tube_nr_fkey" FromRole="exposure_data" ToRole="tube_data" />
+          <NavigationProperty Name="errors" Relationship="Self.exposure_errors" FromRole="exposure_data" ToRole="errors" />
+        </EntityType>
+        <EntityType Name="fss_data">
+          <Key>
+            <PropertyRef Name="fss_nr" />
+          </Key>
+          <Property Name="fss_nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="kv" Type="Int32" />
+          <Property Name="vf" Type="Int32" />
+          <Property Name="fsl" Type="Single" />
+          <Property Name="fsw" Type="Single" />
+          <NavigationProperty Name="tube_data" Relationship="Self.fss_data_tube_nr_fkey" FromRole="fss_data" ToRole="tube_data" />
+        </EntityType>
+        <EntityType Name="system">
+          <Key>
+            <PropertyRef Name="sys_nr" />
+          </Key>
+          <Property Name="sys_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tube_system" Relationship="Self.tube_system_sys_nr_fkey" FromRole="systems" ToRole="tube_system" />
+        </EntityType>
+        <EntityType Name="tester">
+          <Key>
+            <PropertyRef Name="tester_nr" />
+          </Key>
+          <Property Name="tester_nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tube_data" Relationship="Self.tube_tester" FromRole="testers" ToRole="tube_data" />
+        </EntityType>
+        <EntityType Name="tube_data">
+          <Key>
+            <PropertyRef Name="tube_nr" />
+          </Key>
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="cathode_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="gc_height_avg" Type="Single" />
+          <Property Name="gc_height_min" Type="Single" />
+          <Property Name="gc_height_max" Type="Single" />
+          <Property Name="gc_height_stdev" Type="Single" />
+          <Property Name="r_25" Type="Single" />
+          <Property Name="r_60" Type="Single" />
+          <Property Name="eol_r_grid" Type="Int32" />
+          <Property Name="eol_vz" Type="Int32" />
+          <Property Name="eol_focus_corr" Type="Int32" />
+          <Property Name="eol_ia" Type="Single" />
+          <Property Name="eol_ic" Type="Single" />
+          <Property Name="eol_t" Type="Single" />
+          <Property Name="eol_v_grid_peak" Type="Int32" />
+          <Property Name="eol_ia_55kv_09mm" Type="Single" />
+          <Property Name="eol_ifs_09mm" Type="Single" />
+          <Property Name="eol_ifs_19mm" Type="Single" />
+          <Property Name="eq_alum_half" Type="Single" />
+          <Property Name="eq_alum_ic_init" Type="Int32" />
+          <Property Name="eq_alum_ic_limit" Type="Int32" />
+          <Property Name="station_id" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="slit_diaphragm" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="carestream_hpx" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="focal_spot_stand" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="film1" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="film2" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="raysafe_base_unit" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="raysafe_sensor" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="disc_thickness" Type="Single" />
+          <NavigationProperty Name="dose_measurements" Relationship="Self.dose_measurements_tube_nr_fkey" FromRole="tube_data" ToRole="dose_measurements" />
+          <NavigationProperty Name="eol_shot" Relationship="Self.eol_shot_tube_nr_fkey" FromRole="tube_data" ToRole="eol_shot" />
+          <NavigationProperty Name="exposure_data" Relationship="Self.exposure_data_tube_nr_fkey" FromRole="tube_data" ToRole="exposure_data" />
+          <NavigationProperty Name="fss_data" Relationship="Self.fss_data_tube_nr_fkey" FromRole="tube_data" ToRole="fss_data" />
+          <NavigationProperty Name="tube_system" Relationship="Self.tube_system_tube_nr_fkey" FromRole="tube_data" ToRole="tube_system" />
+          <NavigationProperty Name="testers" Relationship="Self.tube_tester" FromRole="tube_data" ToRole="testers" />
+        </EntityType>
+        <EntityType Name="tube_system">
+          <Key>
+            <PropertyRef Name="nr" />
+          </Key>
+          <Property Name="nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sys_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="tube_nr" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="start" Type="DateTime" Precision="6" />
+          <Property Name="finish" Type="DateTime" Precision="6" />
+          <NavigationProperty Name="system" Relationship="Self.tube_system_sys_nr_fkey" FromRole="tube_system" ToRole="systems" />
+          <NavigationProperty Name="tube_data" Relationship="Self.tube_system_tube_nr_fkey" FromRole="tube_system" ToRole="tube_data" />
+        </EntityType>
+        <Association Name="dose_measurements_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="dose_measurements" Type="Self.dose_measurements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="dose_measurements">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="eol_shot_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="eol_shot" Type="Self.eol_shot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="eol_shot">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="exposure_data_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="1" />
+          <End Role="exposure_data" Type="Self.exposure_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="exposure_data">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fss_data_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="fss_data" Type="Self.fss_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="fss_data">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_system_sys_nr_fkey">
+          <End Role="systems" Type="Self.system" Multiplicity="0..1" />
+          <End Role="tube_system" Type="Self.tube_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systems">
+              <PropertyRef Name="sys_nr" />
+            </Principal>
+            <Dependent Role="tube_system">
+              <PropertyRef Name="sys_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tube_system_tube_nr_fkey">
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="0..1" />
+          <End Role="tube_system" Type="Self.tube_system" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tube_data">
+              <PropertyRef Name="tube_nr" />
+            </Principal>
+            <Dependent Role="tube_system">
+              <PropertyRef Name="tube_nr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="exposure_errors">
+          <End Role="errors" Type="Self.error" Multiplicity="*" />
+          <End Role="exposure_data" Type="Self.exposure_data" Multiplicity="*" />
+        </Association>
+        <Association Name="tube_tester">
+          <End Role="testers" Type="Self.tester" Multiplicity="*" />
+          <End Role="tube_data" Type="Self.tube_data" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MicroXEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dose_measurements" EntityType="Self.dose_measurements" />
+          <EntitySet Name="eol_shot" EntityType="Self.eol_shot" />
+          <EntitySet Name="errors" EntityType="Self.error" />
+          <EntitySet Name="exposure_data" EntityType="Self.exposure_data" />
+          <EntitySet Name="fss_data" EntityType="Self.fss_data" />
+          <EntitySet Name="systems" EntityType="Self.system" />
+          <EntitySet Name="testers" EntityType="Self.tester" />
+          <EntitySet Name="tube_data" EntityType="Self.tube_data" />
+          <EntitySet Name="tube_system" EntityType="Self.tube_system" />
+          <AssociationSet Name="dose_measurements_tube_nr_fkey" Association="Self.dose_measurements_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="dose_measurements" EntitySet="dose_measurements" />
+          </AssociationSet>
+          <AssociationSet Name="eol_shot_tube_nr_fkey" Association="Self.eol_shot_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="eol_shot" EntitySet="eol_shot" />
+          </AssociationSet>
+          <AssociationSet Name="exposure_data_tube_nr_fkey" Association="Self.exposure_data_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="exposure_data" EntitySet="exposure_data" />
+          </AssociationSet>
+          <AssociationSet Name="fss_data_tube_nr_fkey" Association="Self.fss_data_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="fss_data" EntitySet="fss_data" />
+          </AssociationSet>
+          <AssociationSet Name="tube_system_sys_nr_fkey" Association="Self.tube_system_sys_nr_fkey">
+            <End Role="systems" EntitySet="systems" />
+            <End Role="tube_system" EntitySet="tube_system" />
+          </AssociationSet>
+          <AssociationSet Name="tube_system_tube_nr_fkey" Association="Self.tube_system_tube_nr_fkey">
+            <End Role="tube_data" EntitySet="tube_data" />
+            <End Role="tube_system" EntitySet="tube_system" />
+          </AssociationSet>
+          <AssociationSet Name="exposure_errors" Association="Self.exposure_errors">
+            <End Role="errors" EntitySet="errors" />
+            <End Role="exposure_data" EntitySet="exposure_data" />
+          </AssociationSet>
+          <AssociationSet Name="tube_tester" Association="Self.tube_tester">
+            <End Role="testers" EntitySet="testers" />
+            <End Role="tube_data" EntitySet="tube_data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MicroXModelStoreContainer" CdmEntityContainer="MicroXEntities">
+          <EntitySetMapping Name="dose_measurements">
+            <EntityTypeMapping TypeName="MicroXModel.dose_measurements">
+              <MappingFragment StoreEntitySet="dose_measurements">
+                <ScalarProperty Name="fromeol" ColumnName="fromeol" />
+                <ScalarProperty Name="meas_nr" ColumnName="meas_nr" />
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="kv" ColumnName="kv" />
+                <ScalarProperty Name="ic_init" ColumnName="ic_init" />
+                <ScalarProperty Name="ic_limit" ColumnName="ic_limit" />
+                <ScalarProperty Name="kvp_a" ColumnName="kvp_a" />
+                <ScalarProperty Name="mas" ColumnName="mas" />
+                <ScalarProperty Name="ms" ColumnName="ms" />
+                <ScalarProperty Name="dose" ColumnName="dose" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eol_shot">
+            <EntityTypeMapping TypeName="MicroXModel.eol_shot">
+              <MappingFragment StoreEntitySet="eol_shot">
+                <ScalarProperty Name="shot_nr" ColumnName="shot_nr" />
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="kv" ColumnName="kv" />
+                <ScalarProperty Name="mas" ColumnName="mas" />
+                <ScalarProperty Name="t" ColumnName="t" />
+                <ScalarProperty Name="ia" ColumnName="ia" />
+                <ScalarProperty Name="ic" ColumnName="ic" />
+                <ScalarProperty Name="vf" ColumnName="vf" />
+                <ScalarProperty Name="if" ColumnName="if" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="errors">
+            <EntityTypeMapping TypeName="MicroXModel.error">
+              <MappingFragment StoreEntitySet="errors">
+                <ScalarProperty Name="errno" ColumnName="errno" />
+                <ScalarProperty Name="error_name" ColumnName="error_name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="exposure_data">
+            <EntityTypeMapping TypeName="MicroXModel.exposure_data">
+              <MappingFragment StoreEntitySet="exposure_data">
+                <ScalarProperty Name="exp_id" ColumnName="exp_id" />
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="exp_ts" ColumnName="exp_ts" />
+                <ScalarProperty Name="shot_count" ColumnName="shot_count" />
+                <ScalarProperty Name="pre_kv" ColumnName="pre_kv" />
+                <ScalarProperty Name="pre_mas" ColumnName="pre_mas" />
+                <ScalarProperty Name="pre_ia" ColumnName="pre_ia" />
+                <ScalarProperty Name="pre_ms" ColumnName="pre_ms" />
+                <ScalarProperty Name="pre_ic" ColumnName="pre_ic" />
+                <ScalarProperty Name="pre_vgc" ColumnName="pre_vgc" />
+                <ScalarProperty Name="pre_vf" ColumnName="pre_vf" />
+                <ScalarProperty Name="post_kv" ColumnName="post_kv" />
+                <ScalarProperty Name="post_mas" ColumnName="post_mas" />
+                <ScalarProperty Name="post_ia" ColumnName="post_ia" />
+                <ScalarProperty Name="post_ms" ColumnName="post_ms" />
+                <ScalarProperty Name="post_ic" ColumnName="post_ic" />
+                <ScalarProperty Name="post_vgc" ColumnName="post_vgc" />
+                <ScalarProperty Name="post_vf_xrs" ColumnName="post_vf_xrs" />
+                <ScalarProperty Name="post_vf_tube" ColumnName="post_vf_tube" />
+                <ScalarProperty Name="post_if_pre" ColumnName="post_if_pre" />
+                <ScalarProperty Name="post_if_after" ColumnName="post_if_after" />
+                <ScalarProperty Name="post_tshot" ColumnName="post_tshot" />
+                <ScalarProperty Name="post_tavg" ColumnName="post_tavg" />
+                <ScalarProperty Name="post_rg" ColumnName="post_rg" />
+                <ScalarProperty Name="post_vz" ColumnName="post_vz" />
+                <ScalarProperty Name="post_dap" ColumnName="post_dap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fss_data">
+            <EntityTypeMapping TypeName="MicroXModel.fss_data">
+              <MappingFragment StoreEntitySet="fss_data">
+                <ScalarProperty Name="fss_nr" ColumnName="fss_nr" />
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="kv" ColumnName="kv" />
+                <ScalarProperty Name="vf" ColumnName="vf" />
+                <ScalarProperty Name="fsl" ColumnName="fsl" />
+                <ScalarProperty Name="fsw" ColumnName="fsw" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="systems">
+            <EntityTypeMapping TypeName="MicroXModel.system">
+              <MappingFragment StoreEntitySet="systems">
+                <ScalarProperty Name="sys_nr" ColumnName="sys_nr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="testers">
+            <EntityTypeMapping TypeName="MicroXModel.tester">
+              <MappingFragment StoreEntitySet="testers">
+                <ScalarProperty Name="tester_nr" ColumnName="tester_nr" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tube_data">
+            <EntityTypeMapping TypeName="MicroXModel.tube_data">
+              <MappingFragment StoreEntitySet="tube_data">
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="cathode_nr" ColumnName="cathode_nr" />
+                <ScalarProperty Name="gc_height_avg" ColumnName="gc_height_avg" />
+                <ScalarProperty Name="gc_height_min" ColumnName="gc_height_min" />
+                <ScalarProperty Name="gc_height_max" ColumnName="gc_height_max" />
+                <ScalarProperty Name="gc_height_stdev" ColumnName="gc_height_stdev" />
+                <ScalarProperty Name="r_25" ColumnName="r_25" />
+                <ScalarProperty Name="r_60" ColumnName="r_60" />
+                <ScalarProperty Name="eol_r_grid" ColumnName="eol_r_grid" />
+                <ScalarProperty Name="eol_vz" ColumnName="eol_vz" />
+                <ScalarProperty Name="eol_focus_corr" ColumnName="eol_focus_corr" />
+                <ScalarProperty Name="eol_ia" ColumnName="eol_ia" />
+                <ScalarProperty Name="eol_ic" ColumnName="eol_ic" />
+                <ScalarProperty Name="eol_t" ColumnName="eol_t" />
+                <ScalarProperty Name="eol_v_grid_peak" ColumnName="eol_v_grid_peak" />
+                <ScalarProperty Name="eol_ia_55kv_09mm" ColumnName="eol_ia_55kv_09mm" />
+                <ScalarProperty Name="eol_ifs_09mm" ColumnName="eol_ifs_09mm" />
+                <ScalarProperty Name="eol_ifs_19mm" ColumnName="eol_ifs_19mm" />
+                <ScalarProperty Name="eq_alum_half" ColumnName="eq_alum_half" />
+                <ScalarProperty Name="eq_alum_ic_init" ColumnName="eq_alum_ic_init" />
+                <ScalarProperty Name="eq_alum_ic_limit" ColumnName="eq_alum_ic_limit" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="slit_diaphragm" ColumnName="slit_diaphragm" />
+                <ScalarProperty Name="carestream_hpx" ColumnName="carestream_hpx" />
+                <ScalarProperty Name="focal_spot_stand" ColumnName="focal_spot_stand" />
+                <ScalarProperty Name="film1" ColumnName="film1" />
+                <ScalarProperty Name="film2" ColumnName="film2" />
+                <ScalarProperty Name="raysafe_base_unit" ColumnName="raysafe_base_unit" />
+                <ScalarProperty Name="raysafe_sensor" ColumnName="raysafe_sensor" />
+                <ScalarProperty Name="disc_thickness" ColumnName="disc_thickness" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tube_system">
+            <EntityTypeMapping TypeName="MicroXModel.tube_system">
+              <MappingFragment StoreEntitySet="tube_system">
+                <ScalarProperty Name="nr" ColumnName="nr" />
+                <ScalarProperty Name="sys_nr" ColumnName="sys_nr" />
+                <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="finish" ColumnName="finish" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="exposure_errors" TypeName="MicroXModel.exposure_errors" StoreEntitySet="exposure_errors">
+            <EndProperty Name="errors">
+              <ScalarProperty Name="errno" ColumnName="errno" />
+            </EndProperty>
+            <EndProperty Name="exposure_data">
+              <ScalarProperty Name="exp_id" ColumnName="exp_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tube_tester" TypeName="MicroXModel.tube_tester" StoreEntitySet="tube_tester">
+            <EndProperty Name="testers">
+              <ScalarProperty Name="tester_nr" ColumnName="tester_nr" />
+            </EndProperty>
+            <EndProperty Name="tube_data">
+              <ScalarProperty Name="tube_nr" ColumnName="tube_nr" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
