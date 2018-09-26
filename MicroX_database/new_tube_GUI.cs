@@ -53,7 +53,7 @@ namespace MicroX_database
         //if valid
         //assign the the relevant variable
         //return true
-        private bool tubeNumValid()
+        private bool TubeNumValid()
         {
             string text = TextBoxTubeNum.Text.ToUpper();
             int number;
@@ -61,36 +61,14 @@ namespace MicroX_database
                 && Int32.TryParse(text.Substring(3), out number) && number > 0)
             {
                 TubeNum = text;
-                LabelTubeNumError.Text = "";
+                LabelTubeNumError.Visible = false;
                 TextBoxTubeNum.Text = text;
                 return true;
             }
-            LabelTubeNumError.Text = "!";
+            LabelTubeNumError.Visible = false;
             return false;
         }
 
-        //validity checkers
-        //check the text in the text boxes
-        //if invalid return false
-        //if valid return true
-        private bool TubeNumValid()
-        {
-            string text = TextBoxTubeNum.Text;
-            int number;
-            if (text.StartsWith("MXT") && text.Length == 8
-                && Int32.TryParse(text.Substring(3), out number) && number > 0)
-            {
-                TubeNum = text;
-                LabelTubeNumError.Visible = false;
-                return true;
-            }
-            else
-            {
-                TubeNum = null;
-                LabelTubeNumError.Visible = true;
-                return false;
-            }
-        }
 
         //check
         private bool TxValid()
@@ -298,7 +276,7 @@ namespace MicroX_database
         //check validity and call save()
         private void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            if (tubeNumValid())
+            if (TubeNumValid())
             {
                 Save();
                 return;
@@ -312,7 +290,7 @@ namespace MicroX_database
         //performs autofill and allows access to other fields
         private void ButtonCheckNumClick(object sender, EventArgs e)
         {
-            if (!tubeNumValid())
+            if (!TubeNumValid())
             {
                 MessageBox.Show("Tube number must be of format: MXTnnnnn \n eg. MXT00123", "Invalid Tube number");
                 return;

@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace MicroX_database
 {
-    public partial class Form2 : Form
+    public partial class FormAddNewSystem : Form
     {
-        public Form2()
+        public FormAddNewSystem()
         {
             InitializeComponent();
+        }
+
+        private void textBoxSystemNumber_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

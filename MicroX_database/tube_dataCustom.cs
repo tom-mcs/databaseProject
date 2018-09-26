@@ -16,14 +16,16 @@ namespace MicroX_database
         /// <returns></returns>
         public tube_system getSystemAssociationAtTime(DateTime dateTime)
         {
-            for(int i = this.tube_system.Count-1; i >= 0; i--)
+            IEnumerable<tube_system> tube_Systems = tube_system.OrderByDescending(tube_system => tube_system.start);
+            foreach(tube_system ts in tube_Systems)
             {
-                if (tube_system.ElementAt(i).start < dateTime)
+                if(ts.finish < dateTime)
                 {
-                    if(tube_system.ElementAt(i).finish == null)
-                    {
-                        return tube_system.ElementAt(i);
-                    }
+                    return null;
+                }
+                else if(ts.start < dateTime)
+                {
+                    return ts;
                 }
             }
             return null;

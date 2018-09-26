@@ -13,7 +13,7 @@ namespace MicroX_database
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new new_tube_GUI());
+            Application.Run(new Form1());
         }
     }
 }

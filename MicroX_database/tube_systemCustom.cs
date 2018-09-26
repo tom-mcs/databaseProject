@@ -20,9 +20,6 @@ namespace MicroX_database
             this.start = start;
         }
 
-        public void End(DateTime endTime)
-        {
-            this.finish = endTime;
-        }
+  
     }
 }

@@ -30,6 +30,7 @@ namespace MicroX_database
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EOLReportGUI));
             this.LabelH2 = new System.Windows.Forms.Label();
             this.LabelH1 = new System.Windows.Forms.Label();
             this.TextBoxV0 = new System.Windows.Forms.TextBox();
@@ -2573,6 +2574,7 @@ namespace MicroX_database
             this.Controls.Add(this.LabelTubeNum);
             this.Controls.Add(this.LabelTitle);
             this.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EOLReportGUI";
             this.Text = "Manufacturing End of Line Test Report";
             this.tableLayoutPanel1.ResumeLayout(false);
